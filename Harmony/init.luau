@@ -19,10 +19,6 @@ local CurrentCamera = workspace.CurrentCamera;
 local RunService = game:GetService('RunService');
 local TextSv = game:GetService('TextService');
 
-if gethui():FindFirstChild("HarmonyLib") then
-    gethui():FindFirstChild("HarmonyLib"):Destroy()
-end
-
 function HM:RNHash() : string
 	return tostring(table.create(math.random(1,10),nil)):gsub('table: ','')
 end;
@@ -1020,10 +1016,6 @@ function HM.new(self)
 	self.SelectedTab = nil;
 	self.Cache.Tab = {};
 	self.Dropdown = {};
-
-        if gethui():FindFirstChild("HarmonyLib") then
-        gethui():FindFirstChild("HarmonyLib"):Destroy()
-        end
 
 	local HarmonyLib = Instance.new("ScreenGui")
 	local WindowFrame = Instance.new("Frame")

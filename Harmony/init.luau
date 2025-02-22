@@ -1021,6 +1021,10 @@ function HM.new(self)
 	self.Cache.Tab = {};
 	self.Dropdown = {};
 
+        if gethui():FindFirstChild("HarmonyLib") then
+        gethui():FindFirstChild("HarmonyLib"):Destroy()
+        end
+
 	local HarmonyLib = Instance.new("ScreenGui")
 	local WindowFrame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")

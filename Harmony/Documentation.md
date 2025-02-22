@@ -3,7 +3,7 @@ This documentation is for Harmony UI.
 
 ## Creating Harmony UI Library
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3345-c-a-t-s-u-s/Harmony/refs/heads/main/src/init.luau"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RileyBeeRBLX6/UI-Library/refs/heads/main/Harmony/init.luau"))()
 ```
 
 ## Creating a Fluent UI Window

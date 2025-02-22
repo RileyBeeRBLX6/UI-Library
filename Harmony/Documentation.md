@@ -31,82 +31,82 @@ local Section = Tab:AddSection({
 ## Creating a Button
 ```lua
 local Button = Section:AddButton({
-		Title = "Button",
-		Callback = function()
+  Title = "Button",
+  Callback = function()
     -- Your script here
-		end,
+  end,
 })
 ```
 
 ## Creating a Toggle
 ```lua
 local Toggle = Section:AddToggle({
-		Title = "Toggle",
-		Default = false,
-		Callback = function(value)
-		-- Your script here
-		end,
+  Title = "Toggle",
+  Default = false,
+  Callback = function(value)
+   -- Your script here
+  end,
 })
 ```
 
 ## Creating a Slider
 ```lua
 local Slider = Section:AddSlider({
-		Title = "Slider",
-		Min = 1,
-		Max = 100,
-		Default = 10,
-		Rounding = 1,
-		Callback = function()
-		-- Your script here
-		end,
+  Title = "Slider",
+  Min = 1,
+  Max = 100,
+  Default = 10,
+  Rounding = 1,
+  Callback = function()
+   -- Your script here
+  end,
 })
 ```
 
 ## Creating a Dropdown
 ```lua
 local Dropdown = Section:AddDropdown({
-		Title = "Dropdown",
-		Values = {"1","2","3"},
-		Default = "1"
-		Callback = function()
+  Title = "Dropdown",
+  Values = {"1","2","3"},
+  Default = "1"
+  Callback = function()
     -- Your script here
-		end,
+  end,
 })
 ```
 
 ## Creating a Adaptive Input
 ```lua
 local Textbox = Section:AddTextbox({
-		Title = "Textbox",
-		Placeholder = "Placeholder",
-		Callback = function()
+  Title = "Textbox",
+  Placeholder = "Placeholder",
+  Callback = function()
     -- Your script here
-		end,
+  end,
 })
 ```
 
 ## Creating a Multi-Dropdown
 ```lua
 local MultiDropdown = Section:AddDropdown({
-		Title = "Multi Dropdown",
-		Values = {"1","2","3","4","5"},
-		Default = {"1"},
-		Multi = true,
-		Callback = function()
-		-- Your script here
-		end,
+  Title = "Multi Dropdown",
+  Values = {"1","2","3","4","5"},
+  Default = {"1"},
+  Multi = true,
+  Callback = function()
+   -- Your script here
+  end,
 })
 ```
 
 ## Creating a Keybind
 ```lua
 local Keybind = Section:AddKeybind({
-		Title = "Keybind",
-		Default = Enum.KeyCode.LeftControl,
-		Callback = function()
+  Title = "Keybind",
+  Default = Enum.KeyCode.LeftControl,
+  Callback = function()
     -- Your script here
-		end,
+  end,
 })
 ```
 

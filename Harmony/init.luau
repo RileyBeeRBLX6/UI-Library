@@ -7,21 +7,21 @@
 --]]
 
 local HM = {
-	Version = '1.1',
+	Version = "1.1",
 	EnableIcon = true,
-};
+}
 
-local TweenSv = game:GetService('TweenService');
-local UserInputSv = game:GetService('UserInputService');
-local LocalPlayer = game:GetService('Players').LocalPlayer;
-local CoreGui = (gethui and gethui()) or game:FindFirstChild('CoreGui') or LocalPlayer.PlayerGui;
-local CurrentCamera = workspace.CurrentCamera;
-local RunService = game:GetService('RunService');
-local TextSv = game:GetService('TextService');
+local TweenSv = game:GetService("TweenService")
+local UserInputSv = game:GetService("UserInputService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local CoreGui = (gethui and gethui()) or game:FindFirstChild("CoreGui") or LocalPlayer.PlayerGui
+local CurrentCamera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
+local TextSv = game:GetService("TextService")
 
 function HM:RNHash() : string
-	return tostring(table.create(math.random(1,10),nil)):gsub('table: ','')
-end;
+	return tostring(table.create(math.random(1,10),nil)):gsub("table: ","")
+end
 
 function HM:Rounding(num, numDecimalPlaces) : number
 	local mult = 10^(numDecimalPlaces or 0)
@@ -29,15 +29,15 @@ function HM:Rounding(num, numDecimalPlaces) : number
 end
 
 function HM:NewInput(frame : Frame) : TextButton
-	local Bth = Instance.new('TextButton',frame);
+	local Bth = Instance.new("TextButton",frame)
 
-	Bth.ZIndex = frame.ZIndex + 10;
-	Bth.Size = UDim2.fromScale(1,1);
-	Bth.BackgroundTransparency = 1;
-	Bth.TextTransparency = 1;
+	Bth.ZIndex = frame.ZIndex + 10
+	Bth.Size = UDim2.fromScale(1,1)
+	Bth.BackgroundTransparency = 1
+	Bth.TextTransparency = 1
 
-	return Bth;
-end;
+	return Bth
+end
 
 ------------------- BACKGROUND BLUR ---------------------
 local function Fixed(planePos, planeNormal, rayOrigin, rayDirection)
@@ -49,47 +49,47 @@ local function Fixed(planePos, planeNormal, rayOrigin, rayDirection)
 	local den = (n.x*d.x) + (n.y*d.y) + (n.z*d.z)
 	local a = -num / den
 
-	return rayOrigin + (a * rayDirection), a;
-end;
+	return rayOrigin + (a * rayDirection), a
+end
 
 function HM:SetBlur(frame,NoAutoBackground)
-	local Part = Instance.new('Part',workspace.Camera);
-	local DepthOfField = Instance.new('DepthOfFieldEffect',game:GetService('Lighting'));
-	local SurfaceGui = Instance.new('SurfaceGui',Part);
-	local BlockMesh = Instance.new("BlockMesh");
+	local Part = Instance.new("Part",workspace.Camera)
+	local DepthOfField = Instance.new("DepthOfFieldEffect",game:GetService("Lighting"))
+	local SurfaceGui = Instance.new("SurfaceGui",Part)
+	local BlockMesh = Instance.new("BlockMesh")
 
-	BlockMesh.Parent = Part;
+	BlockMesh.Parent = Part
 
-	Part.Material = Enum.Material.Glass;
-	Part.Transparency = 1;
-	Part.Reflectance = 1;
-	Part.CastShadow = false;
-	Part.Anchored = true;
-	Part.CanCollide = false;
-	Part.CanQuery = false;
-	Part.CollisionGroup = HM:RNHash();
-	Part.Size = Vector3.new(1, 1, 1) * 0.01;
-	Part.Color = Color3.fromRGB(0,0,0);
+	Part.Material = Enum.Material.Glass
+	Part.Transparency = 1
+	Part.Reflectance = 1
+	Part.CastShadow = false
+	Part.Anchored = true
+	Part.CanCollide = false
+	Part.CanQuery = false
+	Part.CollisionGroup = HM:RNHash()
+	Part.Size = Vector3.new(1, 1, 1) * 0.01
+	Part.Color = Color3.fromRGB(0,0,0)
 
 	TweenSv:Create(Part,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.In),{
-		Transparency = 0.8;
+		Transparency = 0.8
 	}):Play()
 
-	DepthOfField.Enabled = true;
-	DepthOfField.FarIntensity = 1;
-	DepthOfField.FocusDistance = 0;
-	DepthOfField.InFocusRadius = 500;
-	DepthOfField.NearIntensity = 1;
+	DepthOfField.Enabled = true
+	DepthOfField.FarIntensity = 1
+	DepthOfField.FocusDistance = 0
+	DepthOfField.InFocusRadius = 500
+	DepthOfField.NearIntensity = 1
 
-	SurfaceGui.AlwaysOnTop = true;
-	SurfaceGui.Adornee = Part;
-	SurfaceGui.Active = true;
-	SurfaceGui.Face = Enum.NormalId.Front;
-	SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
+	SurfaceGui.AlwaysOnTop = true
+	SurfaceGui.Adornee = Part
+	SurfaceGui.Active = true
+	SurfaceGui.Face = Enum.NormalId.Front
+	SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
-	DepthOfField.Name = HM:RNHash();
-	Part.Name = HM:RNHash();
-	SurfaceGui.Name = HM:RNHash();
+	DepthOfField.Name = HM:RNHash()
+	Part.Name = HM:RNHash()
+	SurfaceGui.Name = HM:RNHash()
 
 	local C4 = {
 		Update = nil,
@@ -102,7 +102,7 @@ function HM:SetBlur(frame,NoAutoBackground)
 			SurfaceGui = SurfaceGui,
 		},
 		Signal = nil
-	};
+	}
 
 	local Update = function()
 		local _,updatec = pcall(function()
@@ -112,69 +112,69 @@ function HM:SetBlur(frame,NoAutoBackground)
 			if not NoAutoBackground then
 				if qualityLevel < 8 then
 					TweenSv:Create(Part,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{
-						Transparency = 1;
+						Transparency = 1
 					}):Play()
 				else
 					TweenSv:Create(Part,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{
-						Transparency = 0.8;
+						Transparency = 0.8
 					}):Play()
-				end;
-			end;
+				end
+			end
 		end)
 
-		local corner0 = frame.AbsolutePosition;
-		local corner1 = corner0 + frame.AbsoluteSize;
+		local corner0 = frame.AbsolutePosition
+		local corner1 = corner0 + frame.AbsoluteSize
 
-		local ray0 = CurrentCamera.ScreenPointToRay(CurrentCamera,corner0.X, corner0.Y, 1);
-		local ray1 = CurrentCamera.ScreenPointToRay(CurrentCamera,corner1.X, corner1.Y, 1);
+		local ray0 = CurrentCamera.ScreenPointToRay(CurrentCamera,corner0.X, corner0.Y, 1)
+		local ray1 = CurrentCamera.ScreenPointToRay(CurrentCamera,corner1.X, corner1.Y, 1)
 
-		local planeOrigin = CurrentCamera.CFrame.Position + CurrentCamera.CFrame.LookVector * (0.05 - CurrentCamera.NearPlaneZ);
+		local planeOrigin = CurrentCamera.CFrame.Position + CurrentCamera.CFrame.LookVector * (0.05 - CurrentCamera.NearPlaneZ)
 
-		local planeNormal = CurrentCamera.CFrame.LookVector;
+		local planeNormal = CurrentCamera.CFrame.LookVector
 
-		local pos0 = Fixed(planeOrigin, planeNormal, ray0.Origin, ray0.Direction);
-		local pos1 = Fixed(planeOrigin, planeNormal, ray1.Origin, ray1.Direction);
+		local pos0 = Fixed(planeOrigin, planeNormal, ray0.Origin, ray0.Direction)
+		local pos1 = Fixed(planeOrigin, planeNormal, ray1.Origin, ray1.Direction)
 
-		pos0 = CurrentCamera.CFrame:PointToObjectSpace(pos0);
-		pos1 = CurrentCamera.CFrame:PointToObjectSpace(pos1);
+		pos0 = CurrentCamera.CFrame:PointToObjectSpace(pos0)
+		pos1 = CurrentCamera.CFrame:PointToObjectSpace(pos1)
 
-		local size   = pos1 - pos0;
-		local center = (pos0 + pos1) / 2;
+		local size   = pos1 - pos0
+		local center = (pos0 + pos1) / 2
 
 		BlockMesh.Offset = center
-		BlockMesh.Scale  = size / 0.0101;
-		Part.CFrame = CurrentCamera.CFrame;
+		BlockMesh.Scale  = size / 0.0101
+		Part.CFrame = CurrentCamera.CFrame
 	end
 
-	C4.Update = Update;
-	C4.Signal = RunService.RenderStepped:Connect(Update);
+	C4.Update = Update
+	C4.Signal = RunService.RenderStepped:Connect(Update)
 
 	pcall(function()
-		C4.Signal2 = CurrentCamera:GetPropertyChangedSignal('CFrame'):Connect(function()
-			Part.CFrame = CurrentCamera.CFrame;
-		end);
+		C4.Signal2 = CurrentCamera:GetPropertyChangedSignal("CFrame"):Connect(function()
+			Part.CFrame = CurrentCamera.CFrame
+		end)
 	end)
 
 	C4.Destroy = function()
-		C4.Signal:Disconnect();
-		C4.Signal2:Disconnect();
+		C4.Signal:Disconnect()
+		C4.Signal2:Disconnect()
 		C4.Update = function()
 
-		end;
+		end
 
 		TweenSv:Create(Part,TweenInfo.new(1),{
 			Transparency = 1
-		}):Play();
+		}):Play()
 
-		DepthOfField:Destroy();
+		DepthOfField:Destroy()
 		Part:Destroy()
-	end;
+	end
 
-	return C4;
-end;
+	return C4
+end
 
 HM.CreateEmuIcon = function(protect : ImageLabel, text : string)
-	local label = Instance.new('TextLabel',protect)
+	local label = Instance.new("TextLabel",protect)
 	label.Text = text
 	label.BackgroundTransparency = 1
 	label.TextScaled = true
@@ -182,7 +182,7 @@ HM.CreateEmuIcon = function(protect : ImageLabel, text : string)
 	label.RichText = true
 	label.ZIndex = protect.ZIndex + 1
 	label.TextColor3 = protect.ImageColor3
-end;
+end
 
 HM.Assets = { -- Icons
 	["lucide-accessibility"] = "rbxassetid://10709751939",
@@ -1003,19 +1003,19 @@ HM.Assets = { -- Icons
 	["lucide-x-square"] = "rbxassetid://10747384217",
 	["lucide-zoom-in"] = "rbxassetid://10747384552",
 	["lucide-zoom-out"] = "rbxassetid://10747384679",
-};
+}
 
 ------------------ CREATE WINDOW --------------------
 function HM.new(self)
-	self.Title = self.Title or "Harmony";
-	self.Scale = self.Scale or UDim2.new(0, 500, 0, 345);
-	self.Keybind = self.Keybind or Enum.KeyCode.LeftAlt;
+	self.Title = self.Title or "Harmony"
+	self.Scale = self.Scale or UDim2.new(0, 500, 0, 345)
+	self.Keybind = self.Keybind or Enum.KeyCode.LeftAlt
 
-	self.Toggle = true;
-	self.Cache = {};
-	self.SelectedTab = nil;
-	self.Cache.Tab = {};
-	self.Dropdown = {};
+	self.Toggle = true
+	self.Cache = {}
+	self.SelectedTab = nil
+	self.Cache.Tab = {}
+	self.Dropdown = {}
 
 	local HarmonyLib = Instance.new("ScreenGui")
 	local WindowFrame = Instance.new("Frame")
@@ -1034,39 +1034,39 @@ function HM.new(self)
 	local HeadLine_2 = Instance.new("Frame")
 	local TabFrames = Instance.new("Frame")
 
-	HarmonyLib.Parent = CoreGui:FindFirstChild('RobloxGui') or CoreGui;
+	HarmonyLib.Parent = CoreGui:FindFirstChild("RobloxGui") or CoreGui
 	HarmonyLib.ResetOnSpawn = false
 	HarmonyLib.IgnoreGuiInset = true
 	HarmonyLib.ZIndexBehavior = Enum.ZIndexBehavior.Global
-	HarmonyLib.Name = HM:RNHash();
+	HarmonyLib.Name = HM:RNHash()
 	
 	if protect_gui or protectgui then
-		(protect_gui or protectgui)(HarmonyLib);
-	end;
+		(protect_gui or protectgui)(HarmonyLib)
+	end
 	
 	task.delay(1,function()
-		for index = 1 , math.random(55,100) do task.wait();
-			local folder = Instance.new('Folder',HarmonyLib);
+		for index = 1 , math.random(55,100) do task.wait()
+			local folder = Instance.new("Folder",HarmonyLib)
 			
-			folder.Name = HM:RNHash();
+			folder.Name = HM:RNHash()
 			
-			Instance.new('ModuleScript',folder).Name = HM:RNHash();
-			Instance.new('BindableEvent',folder).Name = HM:RNHash();
-		end;
+			Instance.new("ModuleScript",folder).Name = HM:RNHash()
+			Instance.new("BindableEvent",folder).Name = HM:RNHash()
+		end
 		
-		for index = 1 , math.random(55,100) do task.wait();
-			local folder = Instance.new('Folder',WindowFrame);
+		for index = 1 , math.random(55,100) do task.wait()
+			local folder = Instance.new("Folder",WindowFrame)
 
-			folder.Name = HM:RNHash();
+			folder.Name = HM:RNHash()
 			
-			Instance.new('ModuleScript',folder).Name = HM:RNHash();
-			Instance.new('BindableEvent',folder).Name = HM:RNHash();
-		end;
+			Instance.new("ModuleScript",folder).Name = HM:RNHash()
+			Instance.new("BindableEvent",folder).Name = HM:RNHash()
+		end
 	end)
 	
-	self.Root = HarmonyLib;
+	self.Root = HarmonyLib
 	
-	WindowFrame.Name = HM:RNHash();
+	WindowFrame.Name = HM:RNHash()
 	WindowFrame.Parent = HarmonyLib
 	WindowFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	WindowFrame.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
@@ -1085,20 +1085,20 @@ function HM.new(self)
 	task.delay(1,function()
 		TweenSv:Create(WindowFrame , TweenInfo.new(1.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Size = self.Scale
-		}):Play();
+		}):Play()
 
 		TweenSv:Create(DropShadow,TweenInfo.new(2,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			ImageTransparency = 0.5
-		}):Play();
+		}):Play()
 	end)
 
-	HM:SetBlur(WindowFrame,true);
+	HM:SetBlur(WindowFrame,true)
 
 	UICorner.CornerRadius = UDim.new(0, 4)
 	UICorner.Parent = WindowFrame
-	UICorner.Name = HM:RNHash();
+	UICorner.Name = HM:RNHash()
 	
-	DropShadow.Name = HM:RNHash();
+	DropShadow.Name = HM:RNHash()
 	DropShadow.Parent = WindowFrame
 	DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
 	DropShadow.BackgroundTransparency = 1.000
@@ -1107,14 +1107,14 @@ function HM.new(self)
 	DropShadow.Rotation = 0.010
 	DropShadow.Size = UDim2.new(1, 47, 1, 47)
 	DropShadow.ZIndex = 0
-	DropShadow.Image = (HM.EnableIcon and "rbxassetid://6015897843") or "";
+	DropShadow.Image = (HM.EnableIcon and "rbxassetid://6015897843") or ""
 	DropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
 	DropShadow.ImageTransparency = 1
 	DropShadow.ScaleType = Enum.ScaleType.Slice
 	DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
-	DropShadow.Name = HM:RNHash();
+	DropShadow.Name = HM:RNHash()
 	
-	Headers.Name = HM:RNHash();
+	Headers.Name = HM:RNHash()
 	Headers.Parent = WindowFrame
 	Headers.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Headers.BackgroundTransparency = 1.000
@@ -1122,9 +1122,9 @@ function HM.new(self)
 	Headers.BorderSizePixel = 0
 	Headers.Size = UDim2.new(1, 0, 0, 22)
 	Headers.ZIndex = 5
-	Headers.Name = HM:RNHash();
+	Headers.Name = HM:RNHash()
 	
-	WindowText.Name = HM:RNHash();
+	WindowText.Name = HM:RNHash()
 	WindowText.Parent = Headers
 	WindowText.AnchorPoint = Vector2.new(0, 0.5)
 	WindowText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1138,14 +1138,14 @@ function HM.new(self)
 	WindowText.TextColor3 = Color3.fromRGB(223, 223, 223)
 	WindowText.TextSize = 12.000
 	WindowText.TextXAlignment = Enum.TextXAlignment.Left
-	WindowText.TextTransparency = 1;
+	WindowText.TextTransparency = 1
 	WindowText.RichText = true
-	WindowText.Name = HM:RNHash();
+	WindowText.Name = HM:RNHash()
 	
 	TweenSv:Create(WindowText,TweenInfo.new(2,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		TextTransparency = 0,
 		Position = UDim2.new(0, 4, 0.5, 0)
-	}):Play();
+	}):Play()
 
 	Frame.Parent = Headers
 	Frame.AnchorPoint = Vector2.new(1, 0.5)
@@ -1156,7 +1156,7 @@ function HM.new(self)
 	Frame.Position = UDim2.new(1, -4, 0.5, 0)
 	Frame.Size = UDim2.new(0, 55, 0.5, 0)
 	Frame.ZIndex = 4
-	Frame.Name = HM:RNHash();
+	Frame.Name = HM:RNHash()
 	
 	UIListLayout.Parent = Frame
 	UIListLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -1164,9 +1164,9 @@ function HM.new(self)
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 	UIListLayout.Padding = UDim.new(0, 5)
-	UIListLayout.Name = HM:RNHash();
+	UIListLayout.Name = HM:RNHash()
 	
-	MinButton.Name = HM:RNHash();
+	MinButton.Name = HM:RNHash()
 	MinButton.Parent = Frame
 	MinButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	MinButton.BackgroundTransparency = 1.000
@@ -1177,7 +1177,7 @@ function HM.new(self)
 	MinButton.ZIndex = 25
 	
 	if HM.EnableIcon then
-		MinButton.Image = "rbxassetid://9886659276";	
+		MinButton.Image = "rbxassetid://9886659276"	
 	else
 		HM.CreateEmuIcon(MinButton , "-")
 	end
@@ -1186,7 +1186,7 @@ function HM.new(self)
 	
 	
 	
-	CloseButton.Name = HM:RNHash();
+	CloseButton.Name = HM:RNHash()
 	CloseButton.Parent = Frame
 	CloseButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	CloseButton.BackgroundTransparency = 1.000
@@ -1202,7 +1202,7 @@ function HM.new(self)
 		HM.CreateEmuIcon(CloseButton , "X")
 	end
 
-	HeadLine.Name = HM:RNHash();
+	HeadLine.Name = HM:RNHash()
 	HeadLine.Parent = Headers
 	HeadLine.AnchorPoint = Vector2.new(0, 1)
 	HeadLine.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
@@ -1213,7 +1213,7 @@ function HM.new(self)
 	HeadLine.Size = UDim2.new(1, 0, 0, 1)
 	HeadLine.ZIndex = 4
 
-	TabInputs.Name = HM:RNHash();
+	TabInputs.Name = HM:RNHash()
 	TabInputs.Parent = WindowFrame
 	TabInputs.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	TabInputs.BackgroundTransparency = 1.000
@@ -1234,25 +1234,25 @@ function HM.new(self)
 	ScrollingFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	ScrollingFrame.Size = UDim2.new(1, -2, 1, -2)
 	ScrollingFrame.ScrollBarThickness = 0
-	ScrollingFrame.Name = HM:RNHash();
+	ScrollingFrame.Name = HM:RNHash()
 	
 	UIListLayout_2.Parent = ScrollingFrame
 	UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_2.Padding = UDim.new(0, 100)
-	UIListLayout_2.Name = HM:RNHash();
+	UIListLayout_2.Name = HM:RNHash()
 	
-	UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
+	UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 		ScrollingFrame.CanvasSize = UDim2.new(0,0,0,UIListLayout_2.AbsoluteContentSize.Y + 10)
 	end)
 
 	task.delay(1,function()
 		TweenSv:Create(UIListLayout_2 , TweenInfo.new(1.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Padding = UDim.new(0, 2)
-		}):Play();
-	end);
+		}):Play()
+	end)
 
-	HeadLine_2.Name = HM:RNHash();
+	HeadLine_2.Name = HM:RNHash()
 	HeadLine_2.Parent = TabInputs
 	HeadLine_2.AnchorPoint = Vector2.new(1, 0)
 	HeadLine_2.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
@@ -1263,7 +1263,7 @@ function HM.new(self)
 	HeadLine_2.Size = UDim2.new(0, 1, 1, 0)
 	HeadLine_2.ZIndex = 4
 
-	TabFrames.Name = HM:RNHash();
+	TabFrames.Name = HM:RNHash()
 	TabFrames.Parent = WindowFrame
 	TabFrames.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	TabFrames.BackgroundTransparency = 1.000
@@ -1274,15 +1274,15 @@ function HM.new(self)
 	TabFrames.ZIndex = 4
 	
 	do
-		self.Dropdown.Visible = false;
+		self.Dropdown.Visible = false
 
 		local DropdownFrame = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local ScrollingFrame = Instance.new("ScrollingFrame")
 		local UIListLayout = Instance.new("UIListLayout")
 
-		DropdownFrame.Name = HM:RNHash();
-		DropdownFrame.Parent = HarmonyLib;
+		DropdownFrame.Name = HM:RNHash()
+		DropdownFrame.Parent = HarmonyLib
 		DropdownFrame.AnchorPoint = Vector2.new(0.5, 1)
 		DropdownFrame.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 		DropdownFrame.BackgroundTransparency = 0.040
@@ -1292,7 +1292,7 @@ function HM.new(self)
 		DropdownFrame.Position = UDim2.new(0.832101822, 0, 0.638923645, 0)
 		DropdownFrame.Size = UDim2.new(0, 153, 0, 0)
 		DropdownFrame.ZIndex = 55
-		DropdownFrame.Visible = false;
+		DropdownFrame.Visible = false
 
 		UICorner.CornerRadius = UDim.new(0, 4)
 		UICorner.Parent = DropdownFrame
@@ -1309,20 +1309,20 @@ function HM.new(self)
 		ScrollingFrame.Size = UDim2.new(1, -5, 1, -10)
 		ScrollingFrame.ZIndex = 56
 		ScrollingFrame.ScrollBarThickness = 1
-		ScrollingFrame.Name = HM:RNHash();
+		ScrollingFrame.Name = HM:RNHash()
 		
 		UIListLayout.Parent = ScrollingFrame
 		UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		UIListLayout.Padding = UDim.new(0, 4)
-		UIListLayout.Name = HM:RNHash();
+		UIListLayout.Name = HM:RNHash()
 		
-		UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
+		UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 			ScrollingFrame.CanvasSize = UDim2.new(0,0,0,UIListLayout.AbsoluteContentSize.Y)
 		end)
 
-		local DropdownSyyu = {};
-		local IsHover = false;
+		local DropdownSyyu = {}
+		local IsHover = false
 
 		local CreateButton = function(name : string) : Frame
 			local bth = Instance.new("Frame")
@@ -1331,7 +1331,7 @@ function HM.new(self)
 			local UIStroke = Instance.new("UIStroke")
 			local PText = Instance.new("TextLabel")
 
-			bth.Name = HM:RNHash();
+			bth.Name = HM:RNHash()
 			bth.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 			bth.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			bth.BorderSizePixel = 0
@@ -1349,7 +1349,7 @@ function HM.new(self)
 			UIStroke.Color = Color3.fromRGB(172, 172, 172)
 			UIStroke.Transparency = 0.900
 
-			PText.Name = HM:RNHash();
+			PText.Name = HM:RNHash()
 			PText.Parent = bth
 			PText.AnchorPoint = Vector2.new(0, 0.5)
 			PText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1367,134 +1367,134 @@ function HM.new(self)
 			PText.TextXAlignment = Enum.TextXAlignment.Left
 			PText.RichText = true
 
-			return bth;
-		end;
+			return bth
+		end
 
 		function DropdownSyyu:Init(data : {string | any}, Default : string | any, Multi : boolean, BaseFrame : Frame , Callback : any)
-			DropdownSyyu.Data = data;
-			DropdownSyyu.Multi = Multi;	
-			DropdownSyyu.BaseFrame = BaseFrame;
-			DropdownSyyu.Visible = true;
+			DropdownSyyu.Data = data
+			DropdownSyyu.Multi = Multi	
+			DropdownSyyu.BaseFrame = BaseFrame
+			DropdownSyyu.Visible = true
 
 			for i,v in next , ScrollingFrame:GetChildren() do
-				if v:IsA('Frame') then
-					v:Destroy();
-				end;
-			end;
+				if v:IsA("Frame") then
+					v:Destroy()
+				end
+			end
 
-			local Selecteds = {};
+			local Selecteds = {}
 
 			for i,v in next , data do
-				local TextFrame = CreateButton(v);
-				local Button = HM:NewInput(TextFrame);
+				local TextFrame = CreateButton(v)
+				local Button = HM:NewInput(TextFrame)
 
-				TextFrame.Parent = ScrollingFrame;
+				TextFrame.Parent = ScrollingFrame
 
 				if not Multi then
 					if v == Default then
-						TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204);
-						Selecteds[1] = TextFrame;
-					end;
+						TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204)
+						Selecteds[1] = TextFrame
+					end
 				else
-					if typeof(Default) == 'table' and (Default[v] or table.find(Default,v)) then
-						TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204);
+					if typeof(Default) == "table" and (Default[v] or table.find(Default,v)) then
+						TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204)
 						Selecteds[v] = true
 					else
 						if v == Default then
-							TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204);
+							TextFrame.BackgroundColor3 = Color3.fromRGB(61, 149, 204)
 							Selecteds[v] = true
-						end;
-					end;
-				end;
+						end
+					end
+				end
 
 				Button.MouseButton1Click:Connect(function()
 					if Multi then
-						Selecteds[v] = not Selecteds[v];
+						Selecteds[v] = not Selecteds[v]
 
 						if Selecteds[v] then
 							TweenSv:Create(TextFrame,TweenInfo.new(0.1),{
 								BackgroundColor3 = Color3.fromRGB(61, 149, 204)
-							}):Play();
+							}):Play()
 						else
 							TweenSv:Create(TextFrame,TweenInfo.new(0.1),{
 								BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-							}):Play();
-						end;
+							}):Play()
+						end
 
-						Callback(Selecteds);
+						Callback(Selecteds)
 					else
 						if Selecteds[1] then
 							TweenSv:Create(Selecteds[1],TweenInfo.new(0.1),{
 								BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-							}):Play();
-						end;
+							}):Play()
+						end
 
 						TweenSv:Create(TextFrame,TweenInfo.new(0.1),{
 							BackgroundColor3 = Color3.fromRGB(61, 149, 204)
 						}):Play()
 
-						Selecteds[1] = TextFrame;
+						Selecteds[1] = TextFrame
 
-						Callback(v);
-					end;
-				end);
-			end;
-		end;
+						Callback(v)
+					end
+				end)
+			end
+		end
 
 		function DropdownSyyu:Close()
-			DropdownSyyu.Visible = false;
+			DropdownSyyu.Visible = false
 
-			IsHover = false;
-		end;
+			IsHover = false
+		end
 
 		DropdownFrame.MouseEnter:Connect(function()
-			IsHover = true;
+			IsHover = true
 		end)
 
 		DropdownFrame.MouseLeave:Connect(function()
-			IsHover = false;
+			IsHover = false
 		end)
 
 		UserInputSv.InputBegan:Connect(function(Input : InputObject , IsTyping : boolean)
 			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
 				if not IsHover then
-					DropdownSyyu:Close();
-				end;
-			end;
-		end);
+					DropdownSyyu:Close()
+				end
+			end
+		end)
 
 		RunService:BindToRenderStep("__DROPDOWN_INIT__"..HM:RNHash(),56,function()
 			if DropdownSyyu.Visible then
-				local BaseFrame : Frame = DropdownSyyu.BaseFrame;
+				local BaseFrame : Frame = DropdownSyyu.BaseFrame
 
 				TweenSv:Create(DropdownFrame,TweenInfo.new(0.15),{
 					Size = UDim2.new(0, 153, 0, math.clamp(UIListLayout.AbsoluteContentSize.Y + 11,11,350)),
 					Position = UDim2.fromOffset(BaseFrame.AbsolutePosition.X + (BaseFrame.AbsoluteSize.X / 2),BaseFrame.AbsolutePosition.Y + math.abs(HarmonyLib.AbsolutePosition.Y))
-				}):Play();
+				}):Play()
 			else
 				TweenSv:Create(DropdownFrame,TweenInfo.new(0.15),{
 					Size = UDim2.new(0, 153, 0, 0),
-				}):Play();
-			end;
+				}):Play()
+			end
 
 			if DropdownFrame.Size.Y.Offset <= 3 then
-				DropdownFrame.Visible = false;
+				DropdownFrame.Visible = false
 			else
-				DropdownFrame.Visible = true;
-			end;
-		end);
+				DropdownFrame.Visible = true
+			end
+		end)
 
-		self.Dropdown = DropdownSyyu;
-	end;
+		self.Dropdown = DropdownSyyu
+	end
 
-	local DropdownSyu = self.Dropdown; -- im lazy + dumbass
+	local DropdownSyu = self.Dropdown -- im lazy + dumbass
 
 	------------------ CREATE TAB -------------------
 	function self:AddTab(obj)
-		obj.Icon = obj.Icon or HM.Assets["lucide-sun"];
-		obj.Title = obj.Title or "Tab";
-		obj.SelectedSeciton = nil;
-		obj.Cache = {};
+		obj.Icon = obj.Icon or HM.Assets["lucide-sun"]
+		obj.Title = obj.Title or "Tab"
+		obj.SelectedSeciton = nil
+		obj.Cache = {}
 
 		------------------- BUTTON -----------------
 		local TabButton = Instance.new("Frame")
@@ -1504,8 +1504,8 @@ function HM.new(self)
 		local UIGradient = Instance.new("UIGradient")
 		local UIGradient_2 = Instance.new("UIGradient")
 
-		TabButton.Name = HM:RNHash();
-		TabButton.Parent = ScrollingFrame;
+		TabButton.Name = HM:RNHash()
+		TabButton.Parent = ScrollingFrame
 		TabButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 		TabButton.BackgroundTransparency = 0.500
 		TabButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1516,7 +1516,7 @@ function HM.new(self)
 		UICorner.CornerRadius = UDim.new(0, 3)
 		UICorner.Parent = TabButton
 
-		PText.Name = HM:RNHash();
+		PText.Name = HM:RNHash()
 		PText.Parent = TabButton
 		PText.AnchorPoint = Vector2.new(0, 0.5)
 		PText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1534,7 +1534,7 @@ function HM.new(self)
 		PText.TextXAlignment = Enum.TextXAlignment.Left
 		PText.RichText = true
 
-		Icon.Name = HM:RNHash();
+		Icon.Name = HM:RNHash()
 		Icon.Parent = TabButton
 		Icon.AnchorPoint = Vector2.new(0, 0.5)
 		Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1546,11 +1546,11 @@ function HM.new(self)
 		Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 		Icon.ZIndex = 8
 		if HM.EnableIcon then
-			Icon.Image = HM.Assets[obj.Icon] or HM.Assets["lucide-"..obj.Icon] or obj.Icon;
+			Icon.Image = HM.Assets[obj.Icon] or HM.Assets["lucide-"..obj.Icon] or obj.Icon
 		else
-			Icon.Visible = false;
+			Icon.Visible = false
 			PText.Position = UDim2.new(0, 8, 0.5, 0)
-		end;
+		end
 
 		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.81, Color3.fromRGB(195, 195, 195)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(186, 186, 186))}
 		UIGradient.Rotation = 90
@@ -1569,7 +1569,7 @@ function HM.new(self)
 		local HeadLine = Instance.new("Frame")
 		local SrcFrame = Instance.new("Frame")
 
-		TabBlock.Name = HM:RNHash();
+		TabBlock.Name = HM:RNHash()
 		TabBlock.Parent = TabFrames
 		TabBlock.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBlock.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1580,7 +1580,7 @@ function HM.new(self)
 		TabBlock.Size = UDim2.new(1, 0, 1, 0)
 		TabBlock.ZIndex = 10
 
-		TabHeaders.Name = HM:RNHash();
+		TabHeaders.Name = HM:RNHash()
 		TabHeaders.Parent = TabBlock
 		TabHeaders.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TabHeaders.BackgroundTransparency = 1.000
@@ -1589,7 +1589,7 @@ function HM.new(self)
 		TabHeaders.ClipsDescendants = true
 		TabHeaders.Size = UDim2.new(1, 0, 0, 23)
 
-		SectionScroll.Name = HM:RNHash();
+		SectionScroll.Name = HM:RNHash()
 		SectionScroll.Parent = TabHeaders
 		SectionScroll.Active = true
 		SectionScroll.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1610,17 +1610,17 @@ function HM.new(self)
 		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 		UIListLayout.Padding = UDim.new(0, 100)
 
-		UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
+		UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 			SectionScroll.CanvasSize = UDim2.new(0,UIListLayout.AbsoluteContentSize.X + 10,0,0)
 		end)
 
 		task.delay(1,function()
 			TweenSv:Create(UIListLayout , TweenInfo.new(1.3,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Padding = UDim.new(0, 4)
-			}):Play();
-		end);
+			}):Play()
+		end)
 
-		HeadLine.Name = HM:RNHash();
+		HeadLine.Name = HM:RNHash()
 		HeadLine.Parent = TabBlock
 		HeadLine.AnchorPoint = Vector2.new(0, 1)
 		HeadLine.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
@@ -1631,7 +1631,7 @@ function HM.new(self)
 		HeadLine.Size = UDim2.new(1, 0, 0, 1)
 		HeadLine.ZIndex = 4
 
-		SrcFrame.Name = HM:RNHash();
+		SrcFrame.Name = HM:RNHash()
 		SrcFrame.Parent = TabBlock
 		SrcFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		SrcFrame.BackgroundTransparency = 1.000
@@ -1644,8 +1644,8 @@ function HM.new(self)
 
 		---------------- CREATE SECTION  ---------------
 		function obj:AddSection(dick)
-			dick = dick or {};
-			dick.Title = dick.Title or "Section";
+			dick = dick or {}
+			dick.Title = dick.Title or "Section"
 
 			local SectionInput = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
@@ -1653,8 +1653,8 @@ function HM.new(self)
 			local Label = Instance.new("TextLabel")
 			local UIGradient = Instance.new("UIGradient")
 
-			SectionInput.Name = HM:RNHash();
-			SectionInput.Parent = SectionScroll;
+			SectionInput.Name = HM:RNHash()
+			SectionInput.Parent = SectionScroll
 			SectionInput.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 			SectionInput.BackgroundTransparency = 0.200
 			SectionInput.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1670,7 +1670,7 @@ function HM.new(self)
 			UIStroke.Color = Color3.fromRGB(172, 172, 172)
 			UIStroke.Transparency = 0.890
 
-			Label.Name = HM:RNHash();
+			Label.Name = HM:RNHash()
 			Label.Parent = SectionInput
 			Label.AnchorPoint = Vector2.new(0.5, 0.5)
 			Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1691,7 +1691,7 @@ function HM.new(self)
 			UIGradient.Rotation = 90
 			UIGradient.Parent = SectionInput
 
-			local LabelScale = TextSv:GetTextSize(Label.Text,Label.TextSize,Label.Font,Vector2.new(math.huge,math.huge));
+			local LabelScale = TextSv:GetTextSize(Label.Text,Label.TextSize,Label.Font,Vector2.new(math.huge,math.huge))
 
 			TweenSv:Create(SectionInput,TweenInfo.new(0.1),{
 				Size = UDim2.new(0, LabelScale.X + 10, 0.899999976, 0)
@@ -1700,7 +1700,7 @@ function HM.new(self)
 			local SectionMainFrame = Instance.new("ScrollingFrame")
 			local UIListLayout = Instance.new("UIListLayout")
 
-			SectionMainFrame.Name = HM:RNHash();
+			SectionMainFrame.Name = HM:RNHash()
 			SectionMainFrame.Parent = SrcFrame
 			SectionMainFrame.Active = true
 			SectionMainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1719,24 +1719,24 @@ function HM.new(self)
 			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 			UIListLayout.Padding = UDim.new(0, 150)
 
-			UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
+			UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 				SectionMainFrame.CanvasSize = UDim2.new(0,0,0,UIListLayout.AbsoluteContentSize.Y + 10)
 			end)
 
 			task.delay(1,function()
 				TweenSv:Create(UIListLayout , TweenInfo.new(1.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 					Padding = UDim.new(0, 4)
-				}):Play();
-			end);
+				}):Play()
+			end)
 
 			do
 				-------------- Toggle -------------
 				function dick:AddToggle(femboy)
-					femboy = femboy or {};
+					femboy = femboy or {}
 
-					femboy.Title = femboy.Title or "Toggle";
-					femboy.Default = femboy.Default or false;
-					femboy.Callback = femboy.Callback or function() end;
+					femboy.Title = femboy.Title or "Toggle"
+					femboy.Default = femboy.Default or false
+					femboy.Callback = femboy.Callback or function() end
 
 					local ToggleSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -1749,7 +1749,7 @@ function HM.new(self)
 					local circle = Instance.new("Frame")
 					local UICorner_3 = Instance.new("UICorner")
 
-					ToggleSrc.Name = HM:RNHash();
+					ToggleSrc.Name = HM:RNHash()
 					ToggleSrc.Parent = SectionMainFrame
 					ToggleSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					ToggleSrc.BackgroundTransparency = 0.150
@@ -1770,7 +1770,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = ToggleSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = ToggleSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1788,7 +1788,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					mv.Name = HM:RNHash();
+					mv.Name = HM:RNHash()
 					mv.Parent = ToggleSrc
 					mv.AnchorPoint = Vector2.new(1, 0.5)
 					mv.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -1805,7 +1805,7 @@ function HM.new(self)
 					UIStroke_2.Color = Color3.fromRGB(172, 172, 172)
 					UIStroke_2.Transparency = 0.890
 
-					circle.Name = HM:RNHash();
+					circle.Name = HM:RNHash()
 					circle.Parent = mv
 					circle.AnchorPoint = Vector2.new(0.5, 0.5)
 					circle.BackgroundColor3 = Color3.fromRGB(0, 255, 238)
@@ -1830,42 +1830,42 @@ function HM.new(self)
 								Position = UDim2.fromScale(0.25,0.5),
 								BackgroundColor3 = Color3.fromRGB(161, 161, 161)
 							}):Play()
-						end;
-					end;
+						end
+					end
 
-					SetValue(femboy.Default);
+					SetValue(femboy.Default)
 
-					local Button = HM:NewInput(ToggleSrc);
+					local Button = HM:NewInput(ToggleSrc)
 
 					Button.MouseButton1Click:Connect(function()
-						femboy.Default = not femboy.Default;
+						femboy.Default = not femboy.Default
 
-						SetValue(femboy.Default);
+						SetValue(femboy.Default)
 
-						femboy.Callback(femboy.Default);
-					end);
+						femboy.Callback(femboy.Default)
+					end)
 
 					function femboy:SetValue(a)
-						femboy.Default = a;
+						femboy.Default = a
 
-						SetValue(femboy.Default);
+						SetValue(femboy.Default)
 
-						femboy.Callback(femboy.Default,true);
-					end;
+						femboy.Callback(femboy.Default,true)
+					end
 
 					function femboy:Destroy()
-						ToggleSrc:Destroy();
-					end;
+						ToggleSrc:Destroy()
+					end
 
-					return femboy;
-				end;
+					return femboy
+				end
 
 
 				------------- Button ------------
 				function dick:AddButton(skidding)
-					skidding = skidding or {};
-					skidding.Title = skidding.Title or "Button";
-					skidding.Callback = skidding.Callback or function() end;
+					skidding = skidding or {}
+					skidding.Title = skidding.Title or "Button"
+					skidding.Callback = skidding.Callback or function() end
 
 					local ButtonSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -1874,8 +1874,8 @@ function HM.new(self)
 					local Label = Instance.new("TextLabel")
 					local Icon = Instance.new("ImageLabel")
 
-					ButtonSrc.Name = HM:RNHash();
-					ButtonSrc.Parent = SectionMainFrame;
+					ButtonSrc.Name = HM:RNHash()
+					ButtonSrc.Parent = SectionMainFrame
 					ButtonSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					ButtonSrc.BackgroundTransparency = 0.150
 					ButtonSrc.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1895,7 +1895,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = ButtonSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = ButtonSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1913,7 +1913,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					Icon.Name = HM:RNHash();
+					Icon.Name = HM:RNHash()
 					Icon.Parent = ButtonSrc
 					Icon.AnchorPoint = Vector2.new(1, 0.5)
 					Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1928,33 +1928,33 @@ function HM.new(self)
 					if HM.EnableIcon then
 						Icon.Image = "rbxassetid://10709791437"
 					else
-						HM.CreateEmuIcon(Icon,'>')
-					end;
+						HM.CreateEmuIcon(Icon,">")
+					end
 
-					local Button = HM:NewInput(ButtonSrc);
+					local Button = HM:NewInput(ButtonSrc)
 
 					Button.MouseButton1Down:Connect(function()
 						TweenSv:Create(Icon,TweenInfo.new(0.1),{
 							Position = UDim2.new(1, -2, 0.5, 0)
-						}):Play();
+						}):Play()
 					end)
 
 					Button.MouseButton1Up:Connect(function()
 						TweenSv:Create(Icon,TweenInfo.new(0.1),{
 							Position = UDim2.new(1, -5, 0.5, 0)
-						}):Play();
+						}):Play()
 					end)
 
 					Button.MouseEnter:Connect(function()
 						TweenSv:Create(Label,TweenInfo.new(0.1),{
 							TextTransparency = 0.200
-						}):Play();
+						}):Play()
 					end)
 
 					Button.MouseLeave:Connect(function()
 						TweenSv:Create(Label,TweenInfo.new(0.1),{
 							TextTransparency = 0.4
-						}):Play();
+						}):Play()
 					end)
 
 					Button.MouseButton1Click:Connect(function()
@@ -1962,21 +1962,21 @@ function HM.new(self)
 					end)
 
 					function skidding:Destroy()
-						ButtonSrc:Destroy();
-					end;
+						ButtonSrc:Destroy()
+					end
 
 					function skidding:Fire(...)
 						skidding.Callback(...)
-					end;
+					end
 
-					return skidding;
-				end;
+					return skidding
+				end
 
 				-------------- PARAGRAPH --------------
 				function dick:AddParagraph(ctx)
-					ctx = ctx or {};
-					ctx.Title = ctx.Title or "Paragraph";
-					ctx.Content = ctx.Content or "Content";
+					ctx = ctx or {}
+					ctx.Title = ctx.Title or "Paragraph"
+					ctx.Content = ctx.Content or "Content"
 
 					local ParagraphSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -1985,7 +1985,7 @@ function HM.new(self)
 					local Title = Instance.new("TextLabel")
 					local Content = Instance.new("TextLabel")
 
-					ParagraphSrc.Name = HM:RNHash();
+					ParagraphSrc.Name = HM:RNHash()
 					ParagraphSrc.Parent = SectionMainFrame
 					ParagraphSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					ParagraphSrc.BackgroundTransparency = 0.150
@@ -2006,7 +2006,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = ParagraphSrc
 
-					Title.Name = HM:RNHash();
+					Title.Name = HM:RNHash()
 					Title.Parent = ParagraphSrc
 					Title.AnchorPoint = Vector2.new(0, 0.5)
 					Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2024,7 +2024,7 @@ function HM.new(self)
 					Title.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					Content.Name = HM:RNHash();
+					Content.Name = HM:RNHash()
 					Content.Parent = ParagraphSrc
 					Content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					Content.BackgroundTransparency = 1.000
@@ -2046,52 +2046,52 @@ function HM.new(self)
 							Title.Text,
 							Title.TextSize,
 							Title.Font,Vector2.new(math.huge,math.huge)
-						);
+						)
 
 						local SizeContent = TextSv:GetTextSize(
 							Content.Text,
 							Content.TextSize,
 							Content.Font,
 							Vector2.new(math.huge,math.huge)
-						);
+						)
 
 						TweenSv:Create(ParagraphSrc,TweenInfo.new(0.1),{
 							Size = UDim2.new(1, -5, 0, (SizeTitle.Y + SizeContent.Y) + 17)
-						}):Play();
-					end;
+						}):Play()
+					end
 
-					Update();
+					Update()
 
 					function ctx:SetContent(a)
-						Content.Text = a;
+						Content.Text = a
 
-						Update();
-					end;
+						Update()
+					end
 
 					function ctx:SetTitle(a)
-						Title.Text = a;
+						Title.Text = a
 
-						Update();
-					end;
+						Update()
+					end
 
-					return ctx;
-				end;
+					return ctx
+				end
 
 				----------------- KEYBIND -----------------
 				function dick:AddKeybind(property)
-					property = property or {};
-					property.Title = property.Title or "Keybind";
-					property.Default = property.Default or nil;
-					property.Blacklist = property.Blacklist or {};
-					property.Callback = property.Callback or function() end;
+					property = property or {}
+					property.Title = property.Title or "Keybind"
+					property.Default = property.Default or nil
+					property.Blacklist = property.Blacklist or {}
+					property.Callback = property.Callback or function() end
 
 					local ToString = function(Key)
-						if typeof(Key) == 'EnumItem' then
-							return Key.Name;
-						end;
+						if typeof(Key) == "EnumItem" then
+							return Key.Name
+						end
 
 						return tostring(Key or "NONE")
-					end;
+					end
 
 					local KeybindSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -2103,8 +2103,8 @@ function HM.new(self)
 					local UIStroke_2 = Instance.new("UIStroke")
 					local BindLabel = Instance.new("TextLabel")
 
-					KeybindSrc.Name = HM:RNHash();
-					KeybindSrc.Parent = SectionMainFrame;
+					KeybindSrc.Name = HM:RNHash()
+					KeybindSrc.Parent = SectionMainFrame
 					KeybindSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					KeybindSrc.BackgroundTransparency = 0.150
 					KeybindSrc.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -2124,7 +2124,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = KeybindSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = KeybindSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2142,7 +2142,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					mv.Name = HM:RNHash();
+					mv.Name = HM:RNHash()
 					mv.Parent = KeybindSrc
 					mv.AnchorPoint = Vector2.new(1, 0.5)
 					mv.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -2160,7 +2160,7 @@ function HM.new(self)
 					UIStroke_2.Color = Color3.fromRGB(172, 172, 172)
 					UIStroke_2.Transparency = 0.890
 
-					BindLabel.Name = HM:RNHash();
+					BindLabel.Name = HM:RNHash()
 					BindLabel.Parent = mv
 					BindLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 					BindLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2178,73 +2178,73 @@ function HM.new(self)
 					BindLabel.TextXAlignment = Enum.TextXAlignment.Right
 
 					local UpdateScale = function()
-						local BindLabelScale = TextSv:GetTextSize(BindLabel.Text,BindLabel.TextSize,BindLabel.Font,Vector2.new(math.huge,math.huge));
+						local BindLabelScale = TextSv:GetTextSize(BindLabel.Text,BindLabel.TextSize,BindLabel.Font,Vector2.new(math.huge,math.huge))
 
 						TweenSv:Create(mv,TweenInfo.new(0.1),{
 							Size = UDim2.new(0, BindLabelScale.X + 10, 0.6, 0)
-						}):Play();
-					end;
+						}):Play()
+					end
 
-					UpdateScale();
+					UpdateScale()
 
-					local Button = HM:NewInput(KeybindSrc);
-					local IsBinding = false;
+					local Button = HM:NewInput(KeybindSrc)
+					local IsBinding = false
 
 					Button.MouseButton1Click:Connect(function()
-						if IsBinding then return; end;
-						IsBinding = true;
+						if IsBinding then return end
+						IsBinding = true
 
-						BindLabel.Text = "...";
+						BindLabel.Text = "..."
 
-						UpdateScale();
+						UpdateScale()
 
-						local Selected = nil;
+						local Selected = nil
 						while not Selected do
-							local Key = UserInputSv.InputBegan:Wait();
+							local Key = UserInputSv.InputBegan:Wait()
 
 							if Key.KeyCode ~= Enum.KeyCode.Unknown and not table.find(property.Blacklist , ToString(Key.KeyCode)) and not table.find(property.Blacklist , Key.KeyCode) then
-								Selected = Key.KeyCode;
-							end;
-						end;
+								Selected = Key.KeyCode
+							end
+						end
 
-						property.Default = Selected;
+						property.Default = Selected
 
-						BindLabel.Text = ToString(Selected);
+						BindLabel.Text = ToString(Selected)
 
-						UpdateScale();
+						UpdateScale()
 
-						IsBinding = false;
+						IsBinding = false
 
-						property.Callback(Selected,property);
+						property.Callback(Selected,property)
 					end)
 
 					function property:SetValue(new)
-						property.Default = new;
+						property.Default = new
 
-						BindLabel.Text = ToString(new);
+						BindLabel.Text = ToString(new)
 
-						UpdateScale();
+						UpdateScale()
 
-						property.Callback(new,true);
-					end;
+						property.Callback(new,true)
+					end
 
 					function property:Destroy()
-						KeybindSrc:Destroy();
-					end;
+						KeybindSrc:Destroy()
+					end
 
-					return property;
-				end;
+					return property
+				end
 
 				-------------- Textbox -------------
 				function dick:AddTextbox(property)
-					property = property or {};
+					property = property or {}
 
-					property.Title = property.Title or "Textbox";
-					property.Placeholder = property.Placeholder or "   ";
-					property.Default = property.Default or "";
-					property.Callback = property.Callback or function() end;
-					property.Numeric = property.Numeric or false;
-					property.Finished = property.Finished or false;
+					property.Title = property.Title or "Textbox"
+					property.Placeholder = property.Placeholder or "   "
+					property.Default = property.Default or ""
+					property.Callback = property.Callback or function() end
+					property.Numeric = property.Numeric or false
+					property.Finished = property.Finished or false
 
 					local TextboxSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -2256,7 +2256,7 @@ function HM.new(self)
 					local UIStroke_2 = Instance.new("UIStroke")
 					local InputBox = Instance.new("TextBox")
 
-					TextboxSrc.Name = HM:RNHash();
+					TextboxSrc.Name = HM:RNHash()
 					TextboxSrc.Parent = SectionMainFrame
 					TextboxSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					TextboxSrc.BackgroundTransparency = 0.150
@@ -2277,7 +2277,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = TextboxSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = TextboxSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2295,7 +2295,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					mv.Name = HM:RNHash();
+					mv.Name = HM:RNHash()
 					mv.Parent = TextboxSrc
 					mv.AnchorPoint = Vector2.new(1, 0.5)
 					mv.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -2313,7 +2313,7 @@ function HM.new(self)
 					UIStroke_2.Color = Color3.fromRGB(172, 172, 172)
 					UIStroke_2.Transparency = 0.890
 
-					InputBox.Name = HM:RNHash();
+					InputBox.Name = HM:RNHash()
 					InputBox.Parent = mv
 					InputBox.AnchorPoint = Vector2.new(0, 0.5)
 					InputBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2332,68 +2332,68 @@ function HM.new(self)
 					InputBox.TextTransparency = 0.500
 
 					local updateScale = function()
-						local scale = TextSv:GetTextSize(InputBox.Text,InputBox.TextSize,InputBox.Font,Vector2.new(math.huge,math.huge));
-						local Base = TextSv:GetTextSize(InputBox.PlaceholderText,InputBox.TextSize,InputBox.Font,Vector2.new(math.huge,math.huge));
-						local max = math.abs(TextboxSrc.AbsoluteSize.X - 95);
+						local scale = TextSv:GetTextSize(InputBox.Text,InputBox.TextSize,InputBox.Font,Vector2.new(math.huge,math.huge))
+						local Base = TextSv:GetTextSize(InputBox.PlaceholderText,InputBox.TextSize,InputBox.Font,Vector2.new(math.huge,math.huge))
+						local max = math.abs(TextboxSrc.AbsoluteSize.X - 95)
 
 						TweenSv:Create(mv,TweenInfo.new(0.1),{
 							Size = UDim2.new(0, math.clamp(scale.X , Base.X , math.max(max , Base.X) + 10) + 9, 0.6, 0)
-						}):Play();
-					end;
+						}):Play()
+					end
 
-					updateScale();
+					updateScale()
 
 					local parse = function()
 						if property.Numeric then
-							InputBox.Text = string.gsub(InputBox.Text, '[^0-9.]', '')
+							InputBox.Text = string.gsub(InputBox.Text, "[^0-9.]", "")
 
 							if tonumber(InputBox.Text) then
-								property.Callback(tonumber(InputBox.Text));
-							end;
+								property.Callback(tonumber(InputBox.Text))
+							end
 
 
-							return;
-						end;
+							return
+						end
 
 						property.Callback(InputBox.Text,property)
-					end;
+					end
 
 					if property.Finished then
-						InputBox.FocusLost:Connect(parse);
-					end;
+						InputBox.FocusLost:Connect(parse)
+					end
 
-					InputBox:GetPropertyChangedSignal('Text'):Connect(function()
-						updateScale();
+					InputBox:GetPropertyChangedSignal("Text"):Connect(function()
+						updateScale()
 						if not property.Finished then
 							parse()
 						end
 					end)
 
 					function property:SetValue(new)
-						property.Default = new;
-						InputBox.Text = tostring(new);
+						property.Default = new
+						InputBox.Text = tostring(new)
 
-						property.Callback(new,true);
-					end;
+						property.Callback(new,true)
+					end
 
 					function property:Destroy()
-						TextboxSrc:Destroy();
-					end;
+						TextboxSrc:Destroy()
+					end
 
-					return property;
-				end;
+					return property
+				end
 
 				----------- Slider -----------
 				function dick:AddSlider(property)
-					property = property or {};
+					property = property or {}
 
-					property.Title = property.Title or "Slider";
-					property.Min = property.Min or 0;
-					property.Max = property.Max or 100;
-					property.Rounding = property.Rounding or 0;
-					property.Default = property.Default or property.Min;
-					property.Type = property.Type or "%";
-					property.Callback = property.Callback or function() end;
+					property.Title = property.Title or "Slider"
+					property.Min = property.Min or 0
+					property.Max = property.Max or 100
+					property.Rounding = property.Rounding or 0
+					property.Default = property.Default or property.Min
+					property.Type = property.Type or "%"
+					property.Callback = property.Callback or function() end
 
 					local SliderSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -2408,7 +2408,7 @@ function HM.new(self)
 					local UICorner_3 = Instance.new("UICorner")
 					local UIGradient_2 = Instance.new("UIGradient")
 
-					SliderSrc.Name = HM:RNHash();
+					SliderSrc.Name = HM:RNHash()
 					SliderSrc.Parent = SectionMainFrame
 					SliderSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					SliderSrc.BackgroundTransparency = 0.150
@@ -2429,7 +2429,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = SliderSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = SliderSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2447,7 +2447,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					ValueLabel.Name = HM:RNHash();
+					ValueLabel.Name = HM:RNHash()
 					ValueLabel.Parent = SliderSrc
 					ValueLabel.AnchorPoint = Vector2.new(1, 0.5)
 					ValueLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2464,7 +2464,7 @@ function HM.new(self)
 					ValueLabel.TextTransparency = 0.400
 					ValueLabel.TextXAlignment = Enum.TextXAlignment.Right
 
-					mv.Name = HM:RNHash();
+					mv.Name = HM:RNHash()
 					mv.Parent = SliderSrc
 					mv.AnchorPoint = Vector2.new(0, 1)
 					mv.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -2482,7 +2482,7 @@ function HM.new(self)
 					UICorner_2.CornerRadius = UDim.new(1, 0)
 					UICorner_2.Parent = mv
 
-					move.Name = HM:RNHash();
+					move.Name = HM:RNHash()
 					move.Parent = mv
 					move.AnchorPoint = Vector2.new(0, 0.5)
 					move.BackgroundColor3 = Color3.fromRGB(0, 255, 238)
@@ -2501,25 +2501,25 @@ function HM.new(self)
 
 					TweenSv:Create(move , TweenInfo.new(0.1),{
 						Size = UDim2.new((property.Default) / (property.Max), 0, 1, 0)
-					}):Play();
+					}):Play()
 
-					local IsHold = false;
+					local IsHold = false
 
 					local function update(Input)
-						local SizeScale = math.clamp((((Input.Position.X) - mv.AbsolutePosition.X) / mv.AbsoluteSize.X), 0, 1);
-						local Main = ((property.Max - property.Min) * SizeScale) + property.Min;
-						local Value = HM:Rounding(Main,property.Rounding);
-						local PositionX = UDim2.fromScale(SizeScale, 1);
-						local normalized = (Value - property.Min) / (property.Max - property.Min);
+						local SizeScale = math.clamp((((Input.Position.X) - mv.AbsolutePosition.X) / mv.AbsoluteSize.X), 0, 1)
+						local Main = ((property.Max - property.Min) * SizeScale) + property.Min
+						local Value = HM:Rounding(Main,property.Rounding)
+						local PositionX = UDim2.fromScale(SizeScale, 1)
+						local normalized = (Value - property.Min) / (property.Max - property.Min)
 
 						TweenSv:Create(move , TweenInfo.new(0.1),{
 							Size = UDim2.new(normalized, 0, 1, 0)
-						}):Play();
+						}):Play()
 
 						ValueLabel.Text = tostring(Value)..tostring(property.Type)
 
 						property.Callback(Value,property)
-					end;
+					end
 
 					mv.InputBegan:Connect(function(Input)
 						if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
@@ -2540,62 +2540,62 @@ function HM.new(self)
 								update(Input)
 							end
 						end
-					end);
+					end)
 
 					function property:SetValue(new)
-						property.Default = new;
+						property.Default = new
 						ValueLabel.Text = tostring(new)..tostring(property.Type)
 
-						property.Callback(new,true);
-					end;
+						property.Callback(new,true)
+					end
 
 					function property:Destroy()
-						SliderSrc:Destroy();
-					end;
+						SliderSrc:Destroy()
+					end
 
-					return property;
-				end;
+					return property
+				end
 
 				------------- Dropdown -------------
 				function dick:AddDropdown(property)
-					property = property or {};
+					property = property or {}
 
-					property.Title = property.Title or "Dropdown";
-					property.Values = property.Values or {};
-					property.Default = property.Default or nil;
-					property.Multi = property.Multi or false;
-					property.Callback = property.Callback or function() end;
+					property.Title = property.Title or "Dropdown"
+					property.Values = property.Values or {}
+					property.Default = property.Default or nil
+					property.Multi = property.Multi or false
+					property.Callback = property.Callback or function() end
 
 					local IsArray = function(a)
 						for i,v in ipairs(a) do
-							return false;
-						end;
-						return true;
-					end;
+							return false
+						end
+						return true
+					end
 
 					local ConcatFunction = function(val)
-						if typeof(val) == 'table' then
-							local src = {};
+						if typeof(val) == "table" then
+							local src = {}
 
-							local isArray = IsArray(val);
+							local isArray = IsArray(val)
 
 							if isArray then
 								for i,v in next , val do
 									if v then
-										table.insert(src,tostring(i));
-									end;
-								end;
+										table.insert(src,tostring(i))
+									end
+								end
 							else
 								for i,v in next , val do
-									table.insert(src,tostring(v));
-								end;
-							end;
+									table.insert(src,tostring(v))
+								end
+							end
 
-							return table.concat(src,' , ');
-						end;
+							return table.concat(src," , ")
+						end
 
-						return tostring(val or "NONE");
-					end;
+						return tostring(val or "NONE")
+					end
 
 					local DropdownSrc = Instance.new("Frame")
 					local UICorner = Instance.new("UICorner")
@@ -2607,8 +2607,8 @@ function HM.new(self)
 					local UIStroke_2 = Instance.new("UIStroke")
 					local ValueLabel = Instance.new("TextLabel")
 
-					DropdownSrc.Name = HM:RNHash();
-					DropdownSrc.Parent = SectionMainFrame;
+					DropdownSrc.Name = HM:RNHash()
+					DropdownSrc.Parent = SectionMainFrame
 					DropdownSrc.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 					DropdownSrc.BackgroundTransparency = 0.150
 					DropdownSrc.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -2628,7 +2628,7 @@ function HM.new(self)
 					UIGradient.Rotation = 90
 					UIGradient.Parent = DropdownSrc
 
-					Label.Name = HM:RNHash();
+					Label.Name = HM:RNHash()
 					Label.Parent = DropdownSrc
 					Label.AnchorPoint = Vector2.new(0, 0.5)
 					Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2646,7 +2646,7 @@ function HM.new(self)
 					Label.TextXAlignment = Enum.TextXAlignment.Left
 					Label.RichText = true
 
-					mv.Name = HM:RNHash();
+					mv.Name = HM:RNHash()
 					mv.Parent = DropdownSrc
 					mv.AnchorPoint = Vector2.new(1, 0.5)
 					mv.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -2664,7 +2664,7 @@ function HM.new(self)
 					UIStroke_2.Color = Color3.fromRGB(172, 172, 172)
 					UIStroke_2.Transparency = 0.890
 
-					ValueLabel.Name = HM:RNHash();
+					ValueLabel.Name = HM:RNHash()
 					ValueLabel.Parent = mv
 					ValueLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 					ValueLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2675,126 +2675,126 @@ function HM.new(self)
 					ValueLabel.Size = UDim2.new(1, -10, 1, -10)
 					ValueLabel.ZIndex = 12
 					ValueLabel.Font = Enum.Font.GothamMedium
-					ValueLabel.Text = tostring(ConcatFunction(property.Default) or "NONE");
+					ValueLabel.Text = tostring(ConcatFunction(property.Default) or "NONE")
 					ValueLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 					ValueLabel.TextSize = 10.000
 					ValueLabel.TextTransparency = 0.500
 					ValueLabel.RichText = true
 
 					local updateScale = function()
-						local scale = TextSv:GetTextSize(ValueLabel.Text,ValueLabel.TextSize,ValueLabel.Font,Vector2.new(math.huge,math.huge));
+						local scale = TextSv:GetTextSize(ValueLabel.Text,ValueLabel.TextSize,ValueLabel.Font,Vector2.new(math.huge,math.huge))
 
 						TweenSv:Create(mv,TweenInfo.new(0.1),{
 							Size = UDim2.new(0, scale.X + 10, 0.600000024, 0)
-						}):Play();
-					end;
+						}):Play()
+					end
 
-					updateScale();
+					updateScale()
 
-					local Button = HM:NewInput(DropdownSrc);
+					local Button = HM:NewInput(DropdownSrc)
 					local UpdateFrame = function(arg : any | {any})
-						property.Default = arg;
-						ValueLabel.Text = ConcatFunction(arg);
+						property.Default = arg
+						ValueLabel.Text = ConcatFunction(arg)
 
 						task.spawn(function()
-							property.Callback(arg,property);
-						end);
+							property.Callback(arg,property)
+						end)
 
-						updateScale();
-					end;
+						updateScale()
+					end
 
 					Button.MouseButton1Click:Connect(function()
-						DropdownSyu:Close();
-						DropdownSyu:Init(property.Values,property.Default,property.Multi,mv,UpdateFrame);
-					end);
+						DropdownSyu:Close()
+						DropdownSyu:Init(property.Values,property.Default,property.Multi,mv,UpdateFrame)
+					end)
 
 					function property:SetValues(a)
-						property.Values = a;
-					end;
+						property.Values = a
+					end
 
 					function property:SetDefault(f)
-						property.Default = f;
-					end;
+						property.Default = f
+					end
 
 					function property:Destroy()
-						DropdownSrc:Destroy();
-					end;
+						DropdownSrc:Destroy()
+					end
 
-					return property;
-				end;
-			end;
+					return property
+				end
+			end
 
 			local ToggleVal = function(val,start)
 				if val then
-					SectionMainFrame.Visible = true;
+					SectionMainFrame.Visible = true
 
 					TweenSv:Create(SectionMainFrame,TweenInfo.new(0.35 , Enum.EasingStyle.Quint , Enum.EasingDirection.InOut),{
 						Position = UDim2.fromScale(0.5,0.5)
-					}):Play();
+					}):Play()
 
 					TweenSv:Create(SectionInput,TweenInfo.new(0.1),{
 						BackgroundTransparency = 0.200
-					}):Play();
+					}):Play()
 
 					TweenSv:Create(Label,TweenInfo.new(0.1),{
 						TextTransparency = 0.200
-					}):Play();
+					}):Play()
 				else
 
 					TweenSv:Create(SectionMainFrame,TweenInfo.new(0.35 , Enum.EasingStyle.Quint , Enum.EasingDirection.InOut),{
 						Position = start
-					}):Play();
+					}):Play()
 
 					TweenSv:Create(SectionInput,TweenInfo.new(0.1),{
 						BackgroundTransparency = 0.45
-					}):Play();
+					}):Play()
 
 					TweenSv:Create(Label,TweenInfo.new(0.1),{
 						TextTransparency = 0.35
-					}):Play();
-				end;
-			end;
+					}):Play()
+				end
+			end
 
-			local SectionId = ToggleVal;
+			local SectionId = ToggleVal
 
 			if not obj.SelectedSeciton then
-				obj.SelectedSeciton = ToggleVal;
+				obj.SelectedSeciton = ToggleVal
 
-				ToggleVal(true);
+				ToggleVal(true)
 			else
-				ToggleVal(false,UDim2.fromScale(1.5,0.5));
-			end;
+				ToggleVal(false,UDim2.fromScale(1.5,0.5))
+			end
 
 			table.insert(obj.Cache , SectionId)
 
-			local MyId = #obj.Cache;
-			local Button = HM:NewInput(SectionInput);
+			local MyId = #obj.Cache
+			local Button = HM:NewInput(SectionInput)
 
 			Button.MouseButton1Click:Connect(function()
-				local FoundSelected = nil;
-				local Selected = obj.SelectedSeciton;
+				local FoundSelected = nil
+				local Selected = obj.SelectedSeciton
 
 				for i,v in next , obj.Cache do
 					if v == FoundSelected then
-						FoundSelected = v;
-					end;
+						FoundSelected = v
+					end
 
 					if v == SectionId then
-						obj.SelectedSeciton = v;
-						v(true);
+						obj.SelectedSeciton = v
+						v(true)
 					else
 						if i < MyId then
-							v(false,UDim2.fromScale(-1.5,0.5));
+							v(false,UDim2.fromScale(-1.5,0.5))
 						else
-							v(false,UDim2.fromScale(1.5,0.5));
+							v(false,UDim2.fromScale(1.5,0.5))
 
-						end;
-					end;
-				end;
-			end);
+						end
+					end
+				end
+			end)
 
-			return dick;
-		end;
+			return dick
+		end
 
 		local ToggleVal = function(val)
 			if val then
@@ -2802,78 +2802,78 @@ function HM.new(self)
 
 				TweenSv:Create(TabButton,TweenInfo.new(0.1),{
 					BackgroundColor3 = Color3.fromRGB(61, 149, 204)
-				}):Play();
+				}):Play()
 
 				TweenSv:Create(Icon,TweenInfo.new(0.4 ),{
 					ImageColor3 = Color3.fromRGB(0, 255, 238),
-				}):Play();
+				}):Play()
 
 				TweenSv:Create(Icon,TweenInfo.new(0.4 , Enum.EasingStyle.Back , Enum.EasingDirection.InOut),{
 					Size = UDim2.new(0.75, 0, 0.75, 0),
 					Position = UDim2.new(0,4,0.5,0)
-				}):Play();
+				}):Play()
 
 				TweenSv:Create(PText,TweenInfo.new(0.1),{
 					TextTransparency = 0.1
-				}):Play();
+				}):Play()
 			else
 				TabBlock.Visible = false
 
 				TweenSv:Create(PText,TweenInfo.new(0.1),{
 					TextTransparency = 0.5
-				}):Play();
+				}):Play()
 
 				TweenSv:Create(TabButton,TweenInfo.new(0.1),{
 					BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-				}):Play();
+				}):Play()
 
 				TweenSv:Create(Icon,TweenInfo.new(0.4),{
 					ImageColor3 = Color3.fromRGB(243, 243, 243),
 					Size = UDim2.new(0.699999988, 0, 0.699999988, 0),
 					Position = UDim2.new(0,5,0.5,0)
-				}):Play();
-			end;
-		end;
+				}):Play()
+			end
+		end
 
-		local MyVal = ToggleVal;
+		local MyVal = ToggleVal
 
 		if not self.SelectedTab then
-			self.SelectedTab = MyVal;
-			ToggleVal(true);
+			self.SelectedTab = MyVal
+			ToggleVal(true)
 		else
-			ToggleVal(false);
-		end;
+			ToggleVal(false)
+		end
 
 		table.insert(self.Cache.Tab,MyVal)
 
-		local Button = HM:NewInput(TabButton);
+		local Button = HM:NewInput(TabButton)
 
 		Button.MouseButton1Click:Connect(function()
 			for i,v in next , self.Cache.Tab do
 				if v == MyVal then
-					v(true);
+					v(true)
 				else
 					v(false)
-				end;
-			end;
+				end
+			end
 		end)
 
-		return obj;
-	end;
+		return obj
+	end
 
 	-----------------------------------------------
-	local dragToggle = nil;
-	local dragSpeed = 0.1;
-	local dragStart = nil;
-	local startPos = nil;
+	local dragToggle = nil
+	local dragSpeed = 0.1
+	local dragStart = nil
+	local startPos = nil
 
 	local function updateInput(input)
-		local delta = input.Position - dragStart;
+		local delta = input.Position - dragStart
 		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-			startPos.Y.Scale, startPos.Y.Offset + delta.Y);
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 
-		game:GetService('TweenService'):Create(WindowFrame, TweenInfo.new(dragSpeed), {Position = position}):Play()
-	end;
+		game:GetService("TweenService"):Create(WindowFrame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
 
 	Headers.InputBegan:Connect(function(input)
 		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
@@ -2882,18 +2882,18 @@ function HM.new(self)
 			startPos = WindowFrame.Position
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
-					dragToggle = false;
-				end;
+					dragToggle = false
+				end
 			end)
-		end;
+		end
 	end)
 
 	--------------------- RESIZE ---------------------
 
 	local Resize = Instance.new("TextButton")
-	local IsHold = false;
+	local IsHold = false
 
-	Resize.Name = HM:RNHash();
+	Resize.Name = HM:RNHash()
 	Resize.Parent = WindowFrame
 	Resize.AnchorPoint = Vector2.new(0.5, 0.5)
 	Resize.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2929,7 +2929,7 @@ function HM.new(self)
 	UserInputSv.InputChanged:Connect(function(input)
 		if IsHold and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 			if self.Toggle then
-				local pios = input.Position;
+				local pios = input.Position
 				local x = (pios.X - WindowFrame.AbsolutePosition.X) 
 
 				local y = (pios.Y - WindowFrame.AbsolutePosition.Y) 
@@ -2938,23 +2938,23 @@ function HM.new(self)
 				if y < 240 then y = 240 end
 
 				local Offset = UDim2.new(0,x,0,y)
-				local plus = UDim2.fromOffset(-(WindowFrame.AbsoluteSize.X - x) / 2, -(WindowFrame.AbsoluteSize.Y - y) / 2);
+				local plus = UDim2.fromOffset(-(WindowFrame.AbsoluteSize.X - x) / 2, -(WindowFrame.AbsoluteSize.Y - y) / 2)
 
 				self.Scale = Offset
 
 				TweenSv:Create(WindowFrame , TweenInfo.new(0.05),{
 					Size = Offset,
 					Position = WindowFrame.Position + plus,
-				}):Play();
-			end;
-		end;
+				}):Play()
+			end
+		end
 
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			if dragToggle then
-				updateInput(input);
-			end;
-		end;
-	end);
+				updateInput(input)
+			end
+		end
+	end)
 
 
 	local GWindow = Instance.new("Frame")
@@ -2969,7 +2969,7 @@ function HM.new(self)
 		local UIListLayout = Instance.new("UIListLayout")
 		local HeadLine = Instance.new("Frame")
 
-		GWindow.Name = HM:RNHash();
+		GWindow.Name = HM:RNHash()
 		GWindow.Parent = HarmonyLib
 		GWindow.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 		GWindow.BackgroundTransparency = 0.040
@@ -2984,7 +2984,7 @@ function HM.new(self)
 		UICorner.CornerRadius = UDim.new(0, 4)
 		UICorner.Parent = GWindow
 
-		DropShadow.Name = HM:RNHash();
+		DropShadow.Name = HM:RNHash()
 		DropShadow.Parent = GWindow
 		DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
 		DropShadow.BackgroundTransparency = 1.000
@@ -2993,15 +2993,15 @@ function HM.new(self)
 		DropShadow.Rotation = 0.010
 		DropShadow.Size = UDim2.new(1, 47, 1, 47)
 		DropShadow.ZIndex = 153
-		DropShadow.Image = (HM.EnableIcon and "rbxassetid://6015897843") or "";
+		DropShadow.Image = (HM.EnableIcon and "rbxassetid://6015897843") or ""
 		DropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
 		DropShadow.ImageTransparency = 1
 		DropShadow.ScaleType = Enum.ScaleType.Slice
 		DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
-		DropShadow.Rotation = 0.001;
+		DropShadow.Rotation = 0.001
 		DropShadow.Active = true
 
-		Headers.Name = HM:RNHash();
+		Headers.Name = HM:RNHash()
 		Headers.Parent = GWindow
 		Headers.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		Headers.BackgroundTransparency = 1.000
@@ -3010,7 +3010,7 @@ function HM.new(self)
 		Headers.Size = UDim2.new(1, 0, 0, 23)
 		Headers.ZIndex = 155
 
-		WindowText.Name = HM:RNHash();
+		WindowText.Name = HM:RNHash()
 		WindowText.Parent = Headers
 		WindowText.AnchorPoint = Vector2.new(0, 0.5)
 		WindowText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -3036,7 +3036,7 @@ function HM.new(self)
 		Frame.Size = UDim2.new(0.699999988, 0, 0.699999988, 0)
 		Frame.ZIndex = 4
 
-		MinButtonT.Name = HM:RNHash();
+		MinButtonT.Name = HM:RNHash()
 		MinButtonT.Parent = Frame
 		MinButtonT.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		MinButtonT.BackgroundTransparency = 1.000
@@ -3049,7 +3049,7 @@ function HM.new(self)
 		if HM.EnableIcon then
 			MinButtonT.Image = "rbxassetid://9886659276"
 		else
-			HM.CreateEmuIcon(MinButtonT,'-')
+			HM.CreateEmuIcon(MinButtonT,"-")
 		end
 
 		UIListLayout.Parent = Frame
@@ -3059,7 +3059,7 @@ function HM.new(self)
 		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 		UIListLayout.Padding = UDim.new(0, 5)
 
-		HeadLine.Name = HM:RNHash();
+		HeadLine.Name = HM:RNHash()
 		HeadLine.Parent = Headers
 		HeadLine.AnchorPoint = Vector2.new(0, 1)
 		HeadLine.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
@@ -3070,18 +3070,18 @@ function HM.new(self)
 		HeadLine.Size = UDim2.new(1, 0, 0, 1)
 		HeadLine.ZIndex = 156
 
-		local dragToggle = nil;
-		local dragSpeed = 0.1;
-		local dragStart = nil;
-		local startPos = nil;
+		local dragToggle = nil
+		local dragSpeed = 0.1
+		local dragStart = nil
+		local startPos = nil
 
 		local function updateInput(input)
-			local delta = input.Position - dragStart;
+			local delta = input.Position - dragStart
 			local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-				startPos.Y.Scale, startPos.Y.Offset + delta.Y);
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 
-			game:GetService('TweenService'):Create(GWindow, TweenInfo.new(dragSpeed), {Position = position}):Play()
-		end;
+			game:GetService("TweenService"):Create(GWindow, TweenInfo.new(dragSpeed), {Position = position}):Play()
+		end
 
 		GWindow.InputBegan:Connect(function(input)
 			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
@@ -3090,67 +3090,67 @@ function HM.new(self)
 				startPos = GWindow.Position
 				input.Changed:Connect(function()
 					if input.UserInputState == Enum.UserInputState.End then
-						dragToggle = false;
-					end;
+						dragToggle = false
+					end
 				end)
-			end;
-		end);
+			end
+		end)
 
 		UserInputSv.InputChanged:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 				if dragToggle then
-					updateInput(input);
-				end;
-			end;
-		end);
+					updateInput(input)
+				end
+			end
+		end)
 
-	end;
+	end
 
 	local ToggleWindow = function()
-		self.Toggle = not self.Toggle;
+		self.Toggle = not self.Toggle
 
 		if self.Toggle then
 			TweenSv:Create(WindowFrame,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = self.Scale
-			}):Play();
+			}):Play()
 
 			TweenSv:Create(DropShadow,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				ImageTransparency = 0.5
-			}):Play();
+			}):Play()
 
 			if GWindow then
 				TweenSv:Create(GWindow,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 					Size = UDim2.new(0, 0, 0, 0)
-				}):Play();
+				}):Play()
 			end
 		else
 			if GWindow then
 				TweenSv:Create(GWindow,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 					Size = UDim2.new(0, 135, 0, 34)
-				}):Play();
+				}):Play()
 			end
 
 			TweenSv:Create(DropShadow,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				ImageTransparency = 1
-			}):Play();
+			}):Play()
 
 			TweenSv:Create(WindowFrame,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = UDim2.new(0,0,0,0)
 			}):Play()
-		end;	
-	end;
+		end	
+	end
 
 	UserInputSv.InputBegan:Connect(function(Input : InputObject)
 		if Input.KeyCode == self.Keybind then
 			ToggleWindow()
-		end;
-	end);
+		end
+	end)
 
-	MinButton.MouseButton1Click:Connect(ToggleWindow);
+	MinButton.MouseButton1Click:Connect(ToggleWindow)
 
-	MinButtonT.MouseButton1Click:Connect(ToggleWindow);
+	MinButtonT.MouseButton1Click:Connect(ToggleWindow)
 
-	return self;
-end;
+	return self
+end
 
-return HM;
+return HM

@@ -1,11 +1,9 @@
 --[[	
 
-	|	NEVERLOSE	UI	|
-	Fuck Synapse X
-		THIS UI MAKE BY CAT_SUS		
-		original Neverlose
-		
-		[https://neverlose.cc/] - csgo cheat
+      | NEVERLOSE UI |
+      This Interface Was Made By 3345-c-a-t-s-u-s
+      
+      [https://neverlose.cc] -- csgo cheat
 ]]
 
 local LocalPlayer = game:GetService("Players").LocalPlayer

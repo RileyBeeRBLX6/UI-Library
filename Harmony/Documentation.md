@@ -6,7 +6,7 @@ This documentation is for Harmony UI.
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RileyBeeRBLX6/UI-Library/refs/heads/main/Harmony/init.luau"))()
 ```
 
-## Creating a Fluent UI Window
+## Creating a Harmony UI Window
 ```lua
 local Window = Library.new({
     Title = "Harmony UI",

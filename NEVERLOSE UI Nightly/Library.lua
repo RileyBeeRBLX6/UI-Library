@@ -4,6 +4,7 @@
       This Interface Was Made By 3345-c-a-t-s-u-s
       
       [https://neverlose.cc] -- csgo cheat
+
 ]]
 
 local LocalPlayer = game:GetService("Players").LocalPlayer

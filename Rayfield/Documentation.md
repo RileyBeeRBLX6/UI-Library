@@ -248,6 +248,11 @@ Keybind:Set("RightCtrl") -- Keybind (string)
 Label:Set("Label Example", 4483362458, Color3.fromRGB(255, 255, 255), false) -- Title, Icon, Color, IgnoreTheme
 ```
 
+## Update Label (Without Icon And Color)
+```lua
+Label:Set("Label Example", false) -- Title, IgnoreTheme
+```
+
 ## Update Paragraph
 ```lua
 Paragraph:Set({Title = "Paragraph Example", Content = "Paragraph Example"})

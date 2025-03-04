@@ -3523,36 +3523,36 @@ end,true)
 local FieldScreen = Instance.new("ScreenGui")
 FieldScreen.DisplayOrder = 100
 FieldScreen.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
-FieldScreen.Name = "Array" .. tostring(math.random(1000,9999))
+FieldScreen.Name = "Uni" .. tostring(math.random(1000,9999))
 FieldScreen.Parent = gethui and gethui() or game:GetService("CoreGui")
 
-local Toggle = Instance.new("ImageLabel")
-Toggle.Name = "Toggle"
-Toggle.Image = "rbxassetid://14958620447"
-Toggle.Active = false
---Toggle.AnchorPoint = Vector2.new(0.5,0.5)
-Toggle.ZIndex = 10
-Toggle.Position = UDim2.new(0.8,0,0,0)
-Toggle.BorderSizePixel = 0
-Toggle.BackgroundTransparency = 1
-Toggle.Size = UDim2.new(0, 42, 0, 42)
-Toggle.SizeConstraint = Enum.SizeConstraint.RelativeXY
-Toggle.Parent = FieldScreen
+local UniBox = Instance.new("ImageLabel")
+UniBox.Name = "UniBox"
+UniBox.Image = "rbxassetid://14958620447"
+UniBox.Active = false
+--UniBox.AnchorPoint = Vector2.new(0.5,0.5)
+UniBox.ZIndex = 10
+UniBox.Position = UDim2.new(0.8,0,0,0)
+UniBox.BorderSizePixel = 0
+UniBox.BackgroundTransparency = 1
+UniBox.Size = UDim2.new(0, 42, 0, 42)
+UniBox.SizeConstraint = Enum.SizeConstraint.RelativeXY
+UniBox.Parent = FieldScreen
 
 local ToggleButton = Instance.new("TextButton")
-ToggleButton.Name = "ToggleButton"
---ToggleButton.AnchorPoint = Vector2.new(0.5,0.5)
-ToggleButton.ZIndex = 10
-ToggleButton.AnchorPoint = Vector2.new(0.5, 0)
-ToggleButton.Position = UDim2.new(0.5, 0, 0, 0)
-ToggleButton.Size = UDim2.new(0, 42+21, 0, 42)
-ToggleButton.BorderSizePixel = 0
-ToggleButton.BackgroundTransparency = 1
-ToggleButton.Text = ""
-ToggleButton.SizeConstraint = Enum.SizeConstraint.RelativeXY
-ToggleButton.Parent = Toggle
+UniBoxButton.Name = "UniBoxButton"
+--UniBoxButton.AnchorPoint = Vector2.new(0.5,0.5)
+UniBoxButton.ZIndex = 10
+UniBoxButton.AnchorPoint = Vector2.new(0.5, 0)
+UniBoxButton.Position = UDim2.new(0.5, 0, 0, 0)
+UniBoxButton.Size = UDim2.new(0, 42+21, 0, 42)
+UniBoxButton.BorderSizePixel = 0
+UniBoxButton.BackgroundTransparency = 1
+UniBoxButton.Text = ""
+UniBoxButton.SizeConstraint = Enum.SizeConstraint.RelativeXY
+UniBoxButton.Parent = UniBox
 
-ArrayFieldLibrary.Toggle = ToggleButton
+ArrayFieldLibrary.UniBox = UniBoxButton
 
 function ArrayFieldLibrary:Destroy()
 	ArrayField:Destroy()
@@ -3561,7 +3561,7 @@ function ArrayFieldLibrary:Destroy()
 	if KeyUI then KeyUI:Destroy() end
 end
 
-ToggleButtonClicked = function(name,inputState,inputObject)
+UniBoxClicked = function(name,inputState,inputObject)
 	if Debounce then return end
 	if Hidden then
 		Hidden = false
@@ -3573,7 +3573,7 @@ ToggleButtonClicked = function(name,inputState,inputObject)
 	end
 end
 
-ToggleButton.MouseButton1Click:Connect(ToggleButtonClicked)
+UniBoxButton.MouseButton1Click:Connect(UniBoxClicked)
 
 --[[
 local Field = ContextActionService:GetButton("Field")

@@ -10,7 +10,7 @@ Arrays  | Designing + Programming + New Features
 
 ]]
 
-local Release = "Release 2A"
+local Release = "Release 3A"
 local NotificationDuration = 6.5
 local ArrayFieldFolder = "ArrayField"
 local ConfigurationFolder = ArrayFieldFolder.."/Configurations"
@@ -3550,7 +3550,7 @@ ToggleButton.BorderSizePixel = 0
 ToggleButton.BackgroundTransparency = 1
 ToggleButton.Text = ""
 ToggleButton.SizeConstraint = Enum.SizeConstraint.RelativeXY
-ToggleButton.Parent = UniButton
+ToggleButton.Parent = Toggle
 
 ArrayFieldLibrary.Toggle = ToggleButton
 

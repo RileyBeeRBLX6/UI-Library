@@ -26,7 +26,6 @@ function Key.new(Title)
 	Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Frame.Size = UDim2.new(0, 0, 0, 0)
 	Frame.ClipsDescendants = true
-	Frame.Draggable = true
 	
 	game:GetService("TweenService"):Create(Frame,TweenInfo.new(1.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		Size = UDim2.new(0, 250, 0, 150)
